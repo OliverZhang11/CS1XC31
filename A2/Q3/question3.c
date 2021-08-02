@@ -46,7 +46,7 @@ int applyOp(int a, int b, char op) {
     case '*': return a * b;
     case '/': return a / b;
     case '%': return a % b;
-    }
+  }
 }
 
 int simpleParse(char *exp) {
@@ -63,10 +63,10 @@ int simpleParse(char *exp) {
       while(i < len && isdigit(exp[i])) {
         val = (val*10) + (exp[i]-'0');
         i++;
-        }
+      }
       push(&values, val);
       i--;
-      }
+    }
     else {
       while(!empty(ops) && precedence(top(ops)) >= precedence(exp[i])) {
         int val2 = top(values);
@@ -76,21 +76,21 @@ int simpleParse(char *exp) {
         char op = top(ops);
         pop(&ops);
         push(&values, applyOp(val1, val2, op));
-        }
+      }
       push(&ops, exp[i]);
-      }
     }
+  }
 
-    while(!empty(ops)) { 
-      int val2 = top(values);
-      pop(&values);
-      int val1 = top(values);
-      pop(&values);
-      char op = top(ops);
-      pop(&ops);
-      push(&values, applyOp(val1, val2, op));
-      }
-    return top(values);
+  while(!empty(ops)) { 
+    int val2 = top(values);
+    pop(&values);
+    int val1 = top(values);
+    pop(&values);
+    char op = top(ops);
+    pop(&ops);
+    push(&values, applyOp(val1, val2, op));
+  }
+  return top(values);
 }
 
 int main() {
